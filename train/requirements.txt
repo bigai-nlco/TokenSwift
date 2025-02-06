@@ -1,0 +1,10 @@
+accelerate==1.0.0
+datasets
+protobuf
+sentencepiece
+tensorboard
+torch
+transformers
+
+# conda install nvidia::cuda-nvcc
+# pip install flash_attn
