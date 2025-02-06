@@ -6,11 +6,11 @@ title: >
 venue: arXiv
 authors:
     - name: Tong Wu
-      tag: 1
+      tag: <i class="fas fa-star" style='font-size:11px'></i> 1
       url: https://wutong4012.github.io/
     - name: Junzhe Shen
       url: https://junzheshen.github.io
-      tag: 1, 2
+      tag: <i class="fas fa-star" style='font-size:11px'></i> 1, 2
     - name: Zixia Jia
       tag: 1
       url: https://openreview.net/profile?id=~Zixia_Jia1
@@ -26,6 +26,7 @@ affiliations:
     - name: LUMIA Lab, Shanghai Jiao Tong University
       tag: 2
 misc: > 
+  <sup><i class="fas fa-star" style='font-size:11px'></i></sup> Equal Contribution.
   <sup><i class="fa fa-envelope"></i></sup> Corresponding authors.
 
 arxiv: https://arxiv.org/abs/2408.02210
