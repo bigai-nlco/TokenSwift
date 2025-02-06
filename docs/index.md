@@ -38,7 +38,7 @@ code: https://github.com/bigai-nlco/ExoViP
     <div class="hero-body">
     <figure class="image">
       <img src="{{ '/assets/img/TokenSwift.png' | relative_url }}" />
-      <figcaption><span class="dnerf">Figure 1.</span> <b>An overview of TokenSwift.</b> First, target model (LLM) with partial KV cache and three linear layers outputs 4 logits in a single forward pass. Tree-based attention is then applied to construct candidate tokens. Secondly, top-<math><mi>k</mi></math> candidate 4-grams are retrieved accordingly. These candidates compose draft tokens, which are fed into the LLM with full KV cache to generate target tokens. The verification is performed by checking if draft tokens match exactly with target tokens (\cref{alg:algorithm}). Finally, we randomly select one of the longest valid draft tokens, and update 4-gram table and KV cache accordingly.</figcaption>
+      <figcaption><span class="dnerf">Figure 1.</span> <b>An overview of TokenSwift.</b> First, target model (LLM) with partial KV cache and three linear layers outputs 4 logits in a single forward pass. Tree-based attention is then applied to construct candidate tokens. Secondly, top-<math><mi>k</mi></math> candidate 4-grams are retrieved accordingly. These candidates compose draft tokens, which are fed into the LLM with full KV cache to generate target tokens. The verification is performed by checking if draft tokens match exactly with target tokens. Finally, we randomly select one of the longest valid draft tokens, and update 4-gram table and KV cache accordingly.</figcaption>
     </figure>
     </div>
   </div>
