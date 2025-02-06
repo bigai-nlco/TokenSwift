@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    {% include head.html %}
+    {% include scripts/mathjax.html %}
+</head>
+
+<body>
+    <!-- Header -->
+
+    {% include header.html %}
+
+    <!-- Content -->
+
+    <div class="container is-fullhd mt-5">
+        <section class="hero">
+            <div class="hero-body">
+                <div class="container is-max-desktop">
+                    <div class="columns is-centered">
+                        <div class="column has-text-centered">
+                            <h1 class="title is-2 publication-title">{% if page.title %}{{ page.title }}{% else %}{{
+                                site.title }}{% endif %}</h1>
+
+                                {% if page.venue %}
+                                <h3 class="title is-4 publication-venue">{{ page.venue }}{% if page.award %}<span class="publication-awards"> {{ page.award }} </span>{% endif %}</h3>
+                                {% endif %}
+                            {% if page.authors %}
+
+                            <div class="is-size-5 publication-authors">
+                                {% for author in page.authors %}
+                                <span class="author-block"><a href="{{ author.url }}">{{ author.name }}</a>{%- if
+                                    author.tag -%}<sup>{{- author.tag -}}</sup>{%- endif -%}</span>{% if forloop.last !=
+                                true %}, {% endif %}
+                                {% endfor %}
+                            </div>
+                            {% endif %}
+
+                            {% if page.affiliations %}
+                            <div class="is-size-5 publication-authors">
+                                {% for affiliation in page.affiliations %}
+                                <span class="author-block">{% if
+                                    affiliation.tag %}<sup>{{ affiliation.tag }}</sup>{% endif %}{{
+                                    affiliation.name }}</span>{% if forloop.last !=
+                                true %}, {% endif %}
+                                {% endfor %}
+                            </div>
+                            {% endif %}
+
+                            {% if page.misc %}<div class="is-size-5 publication-authors">{{ page.misc }}</div>{% endif %}
+
+                            <div class="column has-text-centered">
+                                <div class="publication-links">
+                                    {% if page.paper %}
+                                    <!-- PDF Link. -->
+                                    <span class="link-block">
+                                        <a href="{{ page.paper }}"
+                                            class="external-link button is-normal is-rounded is-dark">
+                                            <span class="icon">
+                                                <i class="fas fa-file-pdf"></i>
+                                            </span>
+                                            <span>Paper</span>
+                                        </a>
+                                    </span>
+                                    {% endif %}
+                                    {% if page.arxiv %}
+                                    <span class="link-block">
+                                        <a href="{{ page.arxiv }}"
+                                            class="external-link button is-normal is-rounded is-dark">
+                                            <span class="icon">
+                                                <i class="ai ai-arxiv"></i>
+                                            </span>
+                                            <span>arXiv</span>
+                                        </a>
+                                    </span>
+                                    {% endif %}
+                                    {% if page.video %}
+                                    <!-- Video Link. -->
+                                    <span class="link-block">
+                                        <a href="{{ page.video }}"
+                                            class="external-link button is-normal is-rounded is-dark">
+                                            <span class="icon">
+                                                <i class="fab fa-youtube"></i>
+                                            </span>
+                                            <span>Video</span>
+                                        </a>
+                                    </span>
+                                    {% endif %}
+                                    {% if page.code %}
+                                    <!-- Code Link. -->
+                                    <span class="link-block">
+                                        <a href="{{ page.code }}"
+                                            class="external-link button is-normal is-rounded is-dark">
+                                            <span class="icon">
+                                                <i class="fab fa-github"></i>
+                                            </span>
+                                            <span>Code</span>
+                                        </a>
+                                    </span>
+                                    {% endif %}
+                                    {% if page.dataset %}
+                                    <!-- Dataset Link. -->
+                                    <span class="link-block">
+                                        <a href="{{ page.dataset }}"
+                                            class="external-link button is-normal is-rounded is-dark">
+                                            <span class="icon">
+                                                <i class="far fa-images"></i>
+                                            </span>
+                                            <span>Data</span>
+                                        </a>
+                                    </span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        {{ content }}
+
+    </div>
+
+    <!-- Footer -->
+
+    {% include footer.html %}
+
+</body>
+
+
+</html>
