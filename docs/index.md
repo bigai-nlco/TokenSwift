@@ -30,20 +30,18 @@ misc: >
   <sup><i class="fa fa-envelope"></i></sup> Corresponding authors.
 
 arxiv: https://arxiv.org/abs/2408.02210
-code: https://github.com/bigai-nlco/ExoViP
+code: https://github.com/bigai-nlco/TokenSwift
 ---
 
 
-<section class="hero teaser">
-  <div class="container is-max-desktop">
-    <div class="hero-body">
-    <figure class="image">
-      <img src="{{ '/assets/img/TokenSwift.png' | relative_url }}" />
-      <figcaption><span class="dnerf">Figure 1.</span> <b>An overview of TokenSwift.</b> First, target model (LLM) with partial KV cache and three linear layers outputs 4 logits in a single forward pass. Tree-based attention is then applied to construct candidate tokens. Secondly, top-<math><mi>k</mi></math> candidate 4-grams are retrieved accordingly. These candidates compose draft tokens, which are fed into the LLM with full KV cache to generate target tokens. The verification is performed by checking if draft tokens match exactly with target tokens. Finally, we randomly select one of the longest valid draft tokens, and update 4-gram table and KV cache accordingly.</figcaption>
-    </figure>
-    </div>
-  </div>
-</section>
+<div class="container is-max-desktop">
+<div class="hero-body">
+<figure class="image" id="framework">
+    <img src="{{ '/assets/img/TokenSwift.png' | relative_url }}" />
+    <figcaption><span class="dnerf">Figure 1.</span> <b>An overview of TokenSwift.</b> First, target model (LLM) with partial KV cache and three linear layers outputs 4 logits in a single forward pass. Tree-based attention is then applied to construct candidate tokens. Secondly, top-<math><mi>k</mi></math> candidate 4-grams are retrieved accordingly. These candidates compose draft tokens, which are fed into the LLM with full KV cache to generate target tokens. The verification is performed by checking if draft tokens match exactly with target tokens. Finally, we randomly select one of the longest valid draft tokens, and update 4-gram table and KV cache accordingly.</figcaption>
+</figure>
+</div>
+</div>
 
 
 <section class="section">
@@ -52,7 +50,7 @@ code: https://github.com/bigai-nlco/ExoViP
 Recent advances in large language models (LLMs), amplified by their long context capacities, have demonstrated remarkable proficiency in intricate reasoning ([OpenAI-o1](https://arxiv.org/abs/2412.16720); [DeepSeek-R1](https://arxiv.org/abs/2501.12948)), agentic thinking ([Reflexion](https://proceedings.neurips.cc/paper_files/paper/2023/file/1b44b878bb782e6954cd888628510e90-Paper-Conference.pdf); [ReAct](https://arxiv.org/pdf/2210.03629); [RAM](https://arxiv.org/pdf/2404.12045)), and creative writing ([Wang et al., 2023](https://arxiv.org/pdf/2311.04459); [Mikhaylovskiy, 2023](https://aclanthology.org/2023.inlg-genchal.2.pdf)), etc. These advancements necessitate the ability to generate lengthy sequences, *e.g.*, o1-like reasoning tends to generate protracted chain-of-thought trajectories before reaching final conclusions.
 <br/>
 <br/>
-However, generating ultra-long sequences (up tp 100K tokens) is painfully slow. For example, generating 100K tokens with LLaMA3.1-8B can take approximately five hours (Figure 2), hindering real-world applications.
+However, generating ultra-long sequences (up tp 100K tokens) is painfully slow. For example, generating 100K tokens with LLaMA3.1-8B can take approximately five hours (<a href="#speed">Figure 2</a>), hindering real-world applications.
 <br/>
 <br/>
 A straightforward solution is to take advantage of recent success in speculative decoding (SD). However, existing methods are generally tailored for generating short sequences, *e.g.*, [TriForce](https://arxiv.org/pdf/2404.11912) and [MagicDec](https://arxiv.org/pdf/2408.11049) are limited to generating 256 and 64 tokens, respectively. Directly extending their generation length to 100K tokens would inevitably encounter failures due to KV cache budget constraints. Furthermore, even when applied to optimized KV cache architectures such as Group Query Attention (GQA), these methods yield only marginal acceleration gains for short-sequence generation. This observation leads to a pivotal research question:
@@ -61,7 +59,7 @@ A straightforward solution is to take advantage of recent success in speculative
 *Is it possible to achieve model-agnostic **lossless** accelerations, akin to those seen in short-sequence SDs, for generating **ultra-long** sequences, with **minimal** training overhead?*
 <br/>
 <br/>
-<figure class="image" style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
+<figure class="image" style="display: flex; justify-content: center; align-items: center; flex-direction: column;" id="speed">
   <img src="{{ '/assets/img/speed.png' | relative_url }}" style="width: 80%; max-width: 600px; height: auto"/>
   <figcaption><span class="dnerf">Figure 2.</span> Comparison of the time taken to generate 100K tokens using autoregressive (AR) and TokenSwift with prefix length of 4096 on Llama3.1-8b. As seen, TokenSwift accelerates the AR process from nearly 5 hours to just 90 minutes.</figcaption>
 </figure>
@@ -89,15 +87,35 @@ TokenSwift intelligently prunes less important KV pairs while preserving critica
 To combat repetition, TokenSwift penalizes recently generated tokens within a sliding window, nudging the model toward diverse outputs. This works alongside sampling strategies like [Nucleus Sampling](https://arxiv.org/pdf/1904.09751), [min-<math><mi>p</mi></math>](https://arxiv.org/pdf/2407.01082), and [<math xmlns="http://www.w3.org/1998/Math/MathML"><mi>η</mi></math>-sampling](https://arxiv.org/pdf/2210.15191)
 
 ## Results: 3x Faster, Scalable, and Robust
-
-<figure class="image" style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
+<a href="#table1">Table 1</a> and <a href="#table2">Table 2</a> are the main results, showing TokenSwift can consistenly achieve over <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>3</mn>  <mo>×</mo></math> acceleration across various model scales and architecture.
+<figure class="image" style="display: flex; justify-content: center; align-items: center; flex-direction: column;" id="table1">
   <img src="{{ '/assets/img/table1.png' | relative_url }}" style="width: 100%; max-width: 1000px; height: auto"/>
   <figcaption><span class="dnerf">Table 1.</span> Experimental results for LLaMA2 and LLaMA3.1 under varying prefix lengths, generating sequences from 20K to 100K tokens.</figcaption>
 </figure>
-
-<figure class="image" style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
+<br/>
+<br/>
+<figure class="image" style="display: flex; justify-content: center; align-items: center; flex-direction: column;" id="table2">
   <img src="{{ '/assets/img/table2.png' | relative_url }}" style="width: 100%; max-width: 1000px; height: auto"/>
-  <figcaption><span class="dnerf">Table 2.</span> Experimental results of TokenSwift for Qwen2.5 across different scales under prefix length 4096, generating sequences from 20K to 100K tokens.</figcaption>
+  <figcaption><span class="dnerf">Table 2.</span> Experimental results of TokenSwift for Qwen2.5 across different scales under prefix length 4096, generating sequences from 20K to 100K tokens. The time is measured in minutes. </figcaption>
+</figure>
+<br/>
+<br/>
+
+<div style="display: flex; justify-content: center; align-items: flex-start;">
+  <figure class="image" style="display: flex; flex-direction: column; margin-right: 20px; text-align: center">
+    <img src="{{ '/assets/img/abl_ngram.png' | relative_url }}" style="width: 100%; max-width: 1000px; height: auto"/>
+    <figcaption>Ablation on Token Reutilization </figcaption>
+  </figure>
+  <figure class="image" style="display: flex; flex-direction: column; text-align: center">
+    <img src="{{ '/assets/img/abl_penalty.png' | relative_url }}" style="width: 100%; max-width: 1000px; height: auto"/>
+    <figcaption>Ablation on Contextual Penalty </figcaption>
+  </figure>
+</div>
+
+
+<figure class="image" style="display: flex; justify-content: center; align-items: center; flex-direction: column;" id="case">
+  <img src="{{ '/assets/img/case.png' | relative_url }}" style="width: 50%; max-width: 1000px; height: auto"/>
+  <figcaption><span class="dnerf">Case Study on Llama3.1-8b</span> Left: fragments of generated text without Contextual Penalty. Right: fragments of generated text with Contextual Penalty. The <span style="color: blue">blue</span> text is the repetition part. </figcaption>
 </figure>
 
 ## BibTex
