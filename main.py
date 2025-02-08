@@ -51,7 +51,7 @@ if __name__ == "__main__":
     if args.tp_size > 1:
         from models.tp import apply_tp, init_dist
 
-        rank0_print("Applying tensor parallel to model ...")
+        print("Applying tensor parallel to model ...")
         target.config.tp_size = args.tp_size
         rank, global_group = init_dist()
         apply_tp(target, [i for i in range(args.tp_size)], group=global_group)
@@ -79,8 +79,8 @@ if __name__ == "__main__":
     time_string = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
     file_path_root = "output" if not args.debug else "debug"
-    file_path = os.path.join(file_path_root, time_string + str(os.environ.get("LOCAL_RANK", "0")))
-    if _get_global_rank == 0:
+    file_path = os.path.join(file_path_root, time_string)
+    if _get_global_rank() == 0:
         os.makedirs(file_path)
         with open(f"{file_path}/config.json", "w") as json_file:
             json.dump(vars(args), json_file, indent=4)
@@ -242,7 +242,7 @@ if __name__ == "__main__":
         time_string = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         file_path_root = "output" if not args.debug else "debug"
         file_path = os.path.join(file_path_root, time_string)
-        if _get_global_rank == 0:
+        if _get_global_rank() == 0:
             os.makedirs(file_path)
             with open(f"{file_path}/config.json", "w") as json_file:
                 json.dump(vars(args), json_file, indent=4)

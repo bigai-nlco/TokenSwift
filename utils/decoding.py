@@ -129,6 +129,7 @@ def SpecLong(
 
         if (
             (file_path is not None)
+            and (int(os.environ.get("LOCAL_RANK", "0")) == 0)
             and (ar_latency_record is not None)
             and ((record_idx < len(ar_token_num_list)) and (cur_gen_len >= ar_token_num_list[record_idx]))
         ):
@@ -150,7 +151,7 @@ def SpecLong(
             rank0_print(f"accepted rate {acceptance_rate} ngram accepted rate {ngram_acceptance_rate}", flush=True)
             rank0_print("*" * 50, flush=True)
 
-            if file_path is not None:
+            if (file_path is not None) and (int(os.environ.get("LOCAL_RANK", "0")) == 0):
                 header = "sd_gen_tokens,accept_rate,ngram_acc\n"
                 entry = f"{cur_gen_len},{acceptance_rate},{ngram_acceptance_rate}\n"
                 log_csv(f"{file_path}/acc_res.csv", header, entry)
