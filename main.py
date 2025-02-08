@@ -14,7 +14,7 @@ from datetime import datetime
 from transformers import AutoTokenizer, set_seed
 
 from arguments import get_args
-from models.tp import _get_global_rank
+from models.tp import _get_global_rank, apply_tp, init_dist
 from models.cache import FlashSimpleCache, RetrievalCache
 from utils.decoding import Autoregressive, SpecLong
 from utils.misc import print_config, rank0_print
@@ -49,8 +49,6 @@ if __name__ == "__main__":
         device_map="cpu",
     )
     if args.tp_size > 1:
-        from models.tp import apply_tp, init_dist
-
         print("Applying tensor parallel to model ...")
         target.config.tp_size = args.tp_size
         rank, global_group = init_dist()

@@ -458,13 +458,6 @@ class Qwen2ForCausalLM(Qwen2PreTrainedModel):
         logits = self.lm_head(hidden_states)
         logits = logits.float()
 
-        # import os, time
-        # local_rank = int(os.environ.get("LOCAL_RANK", "0"))
-        # if local_rank == 0:
-        #     import pdb; pdb.set_trace()
-        # else:
-        #     time.sleep(3600)
-
         if self.process_group != None:
             gathered_logits = [torch.empty_like(logits) for _ in range(self.config.tp_size)]
             dist.all_gather(gathered_logits, logits)
