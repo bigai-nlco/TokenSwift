@@ -11,7 +11,7 @@ from typing import Dict, Any
 from transformers import PreTrainedTokenizer
 
 from arguments import SampleArgs
-from utils.misc import spec_stream, log_csv
+from utils.misc import spec_stream, log_csv, rank0_print
 from utils.sampling import sample, norm_logits, max_fn
 from utils.graph_infer import GraphInferenceEngine
 from utils.medusa_utils import (
@@ -143,12 +143,12 @@ def SpecLong(
 
         if cur_gen_len > 512 * factor:
             factor += 1
-            print("\n", "*" * 50, flush=True)
-            print(f"Generate {cur_gen_len} Tokens Already", flush=True)
+            rank0_print("\n", "*" * 50, flush=True)
+            rank0_print(f"Generate {cur_gen_len} Tokens Already", flush=True)
             acceptance_rate = accepted_count / draft_count
             ngram_acceptance_rate = ngram_accepted_count / draft_count
-            print(f"accepted rate {acceptance_rate} ngram accepted rate {ngram_acceptance_rate}", flush=True)
-            print("*" * 50, flush=True)
+            rank0_print(f"accepted rate {acceptance_rate} ngram accepted rate {ngram_acceptance_rate}", flush=True)
+            rank0_print("*" * 50, flush=True)
 
             if file_path is not None:
                 header = "sd_gen_tokens,accept_rate,ngram_acc\n"
@@ -332,11 +332,11 @@ def SpecLong(
     ngram_acceptance_rate = ngram_accepted_count / draft_count
     avg_tokens = accepted_count / draft_count * gamma
     if verbose:
-        print(
+        rank0_print(
             f"Use {total_time} sec to generate {cur_gen_len} tokens (now {graph_engine.engine.kv_cache.seq_len} tokens), Tokens/s: {cur_gen_len / (total_time)}",
             flush=True,
         )
-        print(
+        rank0_print(
             f"accepted rate {acceptance_rate}, ngram accepted rate {ngram_acceptance_rate}, avg generated tokens {avg_tokens}",
             flush=True,
         )

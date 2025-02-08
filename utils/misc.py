@@ -1,6 +1,13 @@
+import os
+
 from typing import List
 from termcolor import colored
 from transformers import PreTrainedTokenizer
+
+
+def rank0_print(*args, **kwargs):
+    if int(os.environ.get("LOCAL_RANK", "0")) == 0:
+        print(*args, **kwargs)
 
 
 def spec_stream(pred_token_idx: List[int], tokenizer: PreTrainedTokenizer, color: str = "blue"):
@@ -13,7 +20,7 @@ def spec_stream(pred_token_idx: List[int], tokenizer: PreTrainedTokenizer, color
 
     decoded_token = decoded_token.replace("<0x0A>", "\n")
 
-    print(colored(decoded_token, color), flush=True, end=" ")
+    rank0_print(colored(decoded_token, color), flush=True, end=" ")
 
 
 def log_csv(file_path, header, entry):
@@ -34,19 +41,19 @@ def log_csv(file_path, header, entry):
 
 
 def print_config(target, prefill_len, gen_len, gamma, file_path, method, sample_args=None, spec_args=None):
-    print(
+    rank0_print(
         colored("####################################### Config #######################################", "blue"),
         flush=True,
     )
-    print(colored(f"Method: {method}", "red"), flush=True)
-    print(colored(f"Spec Args: {spec_args}", "blue"), flush=True)
-    print(colored(f"Target: {target.config._name_or_path}", "blue"), flush=True)
-    print(colored(f"Prefill Length: {prefill_len}", "blue"), flush=True)
-    print(colored(f"Generation Length: {gen_len}", "blue"), flush=True)
-    print(colored(f"Gamma: {gamma}", "blue"), flush=True)
-    print(colored(f"Sampling Args: {sample_args}", "blue"), flush=True)
-    print(colored(f"Log CSV: {file_path}", "blue"), flush=True)
-    print(
+    rank0_print(colored(f"Method: {method}", "red"), flush=True)
+    rank0_print(colored(f"Spec Args: {spec_args}", "blue"), flush=True)
+    rank0_print(colored(f"Target: {target.config._name_or_path}", "blue"), flush=True)
+    rank0_print(colored(f"Prefill Length: {prefill_len}", "blue"), flush=True)
+    rank0_print(colored(f"Generation Length: {gen_len}", "blue"), flush=True)
+    rank0_print(colored(f"Gamma: {gamma}", "blue"), flush=True)
+    rank0_print(colored(f"Sampling Args: {sample_args}", "blue"), flush=True)
+    rank0_print(colored(f"Log CSV: {file_path}", "blue"), flush=True)
+    rank0_print(
         colored("######################################################################################\n", "blue"),
         flush=True,
     )

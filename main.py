@@ -14,9 +14,10 @@ from datetime import datetime
 from transformers import AutoTokenizer, set_seed
 
 from arguments import get_args
+from models.tp import _get_global_rank
 from models.cache import FlashSimpleCache, RetrievalCache
 from utils.decoding import Autoregressive, SpecLong
-from utils.misc import print_config
+from utils.misc import print_config, rank0_print
 from utils.graph_infer import GraphInferenceEngine
 from utils.medusa_utils import generate_medusa_buffers
 from utils.n_gram import N_Gram
@@ -45,12 +46,19 @@ if __name__ == "__main__":
     target = CausalLM.from_pretrained(
         args.ckpt_path,
         torch_dtype=torch.bfloat16,
-        device_map="cuda:0",
+        device_map="cpu",
     )
-    target = target.eval()
+    if args.tp_size > 1:
+        from models.tp import apply_tp, init_dist
+
+        rank0_print("Applying tensor parallel to model ...")
+        target.config.tp_size = args.tp_size
+        rank, global_group = init_dist()
+        apply_tp(target, [i for i in range(args.tp_size)], group=global_group)
+    target = target.to("cuda").eval()
 
     if target.config.tie_word_embeddings:
-        print(">> tie_word_embeddings")
+        rank0_print(">> tie_word_embeddings")
         target.lm_head.weight = target.model.embed_tokens.weight
 
     tokenizer = AutoTokenizer.from_pretrained(f"{args.model_path_prefix}/{args.target}", use_fast=True, legacy=False)
@@ -71,11 +79,12 @@ if __name__ == "__main__":
     time_string = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
     file_path_root = "output" if not args.debug else "debug"
-    file_path = os.path.join(file_path_root, time_string)
-    os.makedirs(file_path)
-    with open(f"{file_path}/config.json", "w") as json_file:
-        json.dump(vars(args), json_file, indent=4)
-        json.dump(vars(sample_args), json_file, indent=4)
+    file_path = os.path.join(file_path_root, time_string + str(os.environ.get("LOCAL_RANK", "0")))
+    if _get_global_rank == 0:
+        os.makedirs(file_path)
+        with open(f"{file_path}/config.json", "w") as json_file:
+            json.dump(vars(args), json_file, indent=4)
+            json.dump(vars(sample_args), json_file, indent=4)
 
     print_config(
         target,
@@ -184,7 +193,7 @@ if __name__ == "__main__":
                 tokenizer, graph_engine, input_ids, gen_len=args.gen_len, sample_args=sample_args, verbose=args.verbose
             )
 
-        print(colored(f"[Autoregressive] average latency: {ar_latency} ms", "red"))
+        rank0_print(colored(f"[Autoregressive] average latency: {ar_latency} ms", "red"))
 
     ######## Warm up for our method ########
     n_warmups = 1
@@ -233,17 +242,18 @@ if __name__ == "__main__":
         time_string = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         file_path_root = "output" if not args.debug else "debug"
         file_path = os.path.join(file_path_root, time_string)
-        os.makedirs(file_path)
-        with open(f"{file_path}/config.json", "w") as json_file:
-            json.dump(vars(args), json_file, indent=4)
-            json.dump(vars(sample_args), json_file, indent=4)
+        if _get_global_rank == 0:
+            os.makedirs(file_path)
+            with open(f"{file_path}/config.json", "w") as json_file:
+                json.dump(vars(args), json_file, indent=4)
+                json.dump(vars(sample_args), json_file, indent=4)
 
     method_latency = sum(all_latency) / len(all_latency)
 
-    print(
+    rank0_print(
         colored(
             f"average acceptance rate (NOT per token): {sum(all_acceptance_rate) / len(all_acceptance_rate)}", "red"
         )
     )
-    print(colored(f"[SpecLong] average latency: {method_latency} ms", "red"))
-    print(colored(f"[E2E Speedup]: {ar_latency / method_latency}", "red"))
+    rank0_print(colored(f"[SpecLong] average latency: {method_latency} ms", "red"))
+    rank0_print(colored(f"[E2E Speedup]: {ar_latency / method_latency}", "red"))

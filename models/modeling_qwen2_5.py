@@ -1,6 +1,7 @@
 from typing import Optional
 
 import torch
+import torch.distributed as dist
 from torch import nn
 
 from transformers.activations import ACT2FN
@@ -45,9 +46,12 @@ class Qwen2MLP(nn.Module):
         self.up_proj = nn.Linear(self.hidden_size, self.intermediate_size, bias=False)
         self.down_proj = nn.Linear(self.intermediate_size, self.hidden_size, bias=False)
         self.act_fn = ACT2FN[config.hidden_act]
+        self.process_group = None
 
     def forward(self, x):
         down_proj = self.down_proj(self.act_fn(self.gate_proj(x)) * self.up_proj(x))
+        if self.process_group != None:
+            dist.all_reduce(down_proj, group=self.process_group)
 
         return down_proj
 
@@ -135,6 +139,7 @@ class Qwen2Attention2(nn.Module):
         self.max_position_embeddings = config.max_position_embeddings
         self.rope_theta = config.rope_theta
         self.attention_dropout = config.attention_dropout
+        self.process_group = None
 
         self.q_proj = nn.Linear(self.hidden_size, self.num_heads * self.head_dim, bias=True)
         self.k_proj = nn.Linear(self.hidden_size, self.num_key_value_heads * self.head_dim, bias=True)
@@ -195,6 +200,9 @@ class Qwen2Attention2(nn.Module):
 
         attn_output = attn_output.reshape(bsz, q_len, self.hidden_size).contiguous()
         attn_output = self.o_proj(attn_output)
+
+        if self.process_group != None:
+            dist.all_reduce(attn_output, group=self.process_group)
 
         return attn_output
 
@@ -271,6 +279,8 @@ class MedusaModel(nn.Module):
         self.linear = nn.Linear(config.hidden_size, config.hidden_size, bias=False)
         self.input_layernorm = Qwen2RMSNorm(config.hidden_size, eps=config.rms_norm_eps)
         self.post_layernorm = Qwen2RMSNorm(config.hidden_size, eps=config.rms_norm_eps)
+        self.process_group = None
+        self.config = config
 
     def forward(
         self,
@@ -280,8 +290,13 @@ class MedusaModel(nn.Module):
         residual = hidden_states
         hidden_states = self.input_layernorm(hidden_states)
         hidden_states = self.linear(hidden_states)
-        hidden_states = residual + hidden_states
 
+        if self.process_group != None:
+            gathered_states = [torch.empty_like(hidden_states) for _ in range(self.config.tp_size)]
+            dist.all_gather(gathered_states, hidden_states)
+            hidden_states = torch.cat(gathered_states, dim=-1)
+
+        hidden_states = residual + hidden_states
         norm_hidden_states = self.post_layernorm(hidden_states)
 
         return hidden_states, norm_hidden_states
@@ -292,6 +307,8 @@ class Qwen2Model(Qwen2PreTrainedModel):
         super().__init__(config)
         self.padding_idx = config.pad_token_id
         self.vocab_size = config.vocab_size
+        self.process_group = None
+        self.config = config
 
         self.embed_tokens = nn.Embedding(config.vocab_size, config.hidden_size, self.padding_idx)
         self.layers = nn.ModuleList(
@@ -326,6 +343,10 @@ class Qwen2Model(Qwen2PreTrainedModel):
             position_ids = position_ids.unsqueeze(0)
 
         inputs_embeds = self.embed_tokens(input_ids)
+        if self.process_group != None:
+            gathered_embeds = [torch.empty_like(inputs_embeds) for _ in range(self.config.tp_size)]
+            dist.all_gather(gathered_embeds, inputs_embeds)
+            inputs_embeds = torch.cat(gathered_embeds, dim=-1)
         hidden_states = inputs_embeds
 
         if (attention_mask is None) and (kv_cache is not None):
@@ -399,9 +420,11 @@ class Qwen2ForCausalLM(Qwen2PreTrainedModel):
 
     def __init__(self, config: Qwen2Config):
         super().__init__(config)
+        self.config = config
         self.model = Qwen2Model(config)
         self.vocab_size = config.vocab_size
         self.lm_head = nn.Linear(config.hidden_size, config.vocab_size, bias=False)
+        self.process_group = None
 
         # Initialize weights and apply final processing
         self.post_init()
@@ -434,5 +457,17 @@ class Qwen2ForCausalLM(Qwen2PreTrainedModel):
         hidden_states = outputs
         logits = self.lm_head(hidden_states)
         logits = logits.float()
+
+        # import os, time
+        # local_rank = int(os.environ.get("LOCAL_RANK", "0"))
+        # if local_rank == 0:
+        #     import pdb; pdb.set_trace()
+        # else:
+        #     time.sleep(3600)
+
+        if self.process_group != None:
+            gathered_logits = [torch.empty_like(logits) for _ in range(self.config.tp_size)]
+            dist.all_gather(gathered_logits, logits)
+            logits = torch.cat(gathered_logits, dim=-1)
 
         return logits

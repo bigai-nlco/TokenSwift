@@ -7,6 +7,7 @@ sys.path.append(root_dir)
 import gc
 import math
 import torch
+import torch.distributed as dist
 
 from typing import Optional
 from transformers import PreTrainedModel
@@ -65,6 +66,11 @@ class InferenceEngine:
         hidden_states = torch.vstack(hidden_states_list)
         logits = self.model.lm_head(hidden_states)
 
+        if self.model.process_group != None:
+            gathered_logits = [torch.empty_like(logits) for _ in range(self.model.config.tp_size)]
+            dist.all_gather(gathered_logits, logits)
+            logits = torch.cat(gathered_logits, dim=-1)
+
         return logits
 
     # @torch.inference_mode()
@@ -82,6 +88,11 @@ class InferenceEngine:
 
     #     hidden_states = torch.vstack(hidden_states_list)
     #     logits = self.model.lm_head(hidden_states)
+
+    #     if self.model.process_group != None:
+    #         gathered_logits = [torch.empty_like(logits) for _ in range(self.model.config.tp_size)]
+    #         dist.all_gather(gathered_logits, logits)
+    #         logits = torch.cat(gathered_logits, dim=-1)
 
     #     return logits
 

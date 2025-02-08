@@ -111,6 +111,7 @@ class Qwen2Config(PretrainedConfig):
         max_window_layers=28,
         attention_dropout=0.0,
         medusa_heads=3,
+        tp_size=1,
         **kwargs,
     ):
         self.vocab_size = vocab_size
@@ -136,6 +137,7 @@ class Qwen2Config(PretrainedConfig):
         self.attention_dropout = attention_dropout
 
         self.medusa_heads = medusa_heads
+        self.tp_size = tp_size
 
         super().__init__(
             tie_word_embeddings=tie_word_embeddings,

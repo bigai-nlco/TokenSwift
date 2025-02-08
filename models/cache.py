@@ -4,6 +4,8 @@ from typing import Tuple
 from einops import rearrange, einsum
 from transformers import PreTrainedModel
 
+from utils.misc import rank0_print
+
 
 class Cache:
     """
@@ -39,7 +41,7 @@ class FlashSimpleCache(Cache):
         ).to(model.device)
 
     def print_status(self):
-        print("[Full Cache] Cached:", self.seq_len, "| Budget:", self.target_max_budget)
+        rank0_print("[Full Cache] Cached:", self.seq_len, "| Budget:", self.target_max_budget)
 
     def reset(self):
         self.seq_len = 0
@@ -118,7 +120,7 @@ class RetrievalCache(Cache):
         self.start_size = 16
 
     def print_status(self):
-        print("[Retrieval Cache] Budget:", self.retri_max_budget, " | PreFill:", self.prefill_len)
+        rank0_print("[Retrieval Cache] Budget:", self.retri_max_budget, " | PreFill:", self.prefill_len)
 
     def init_retri_cache(self, kv_cache: FlashSimpleCache, query_states: torch.Tensor, layer_idx: int) -> None:
 

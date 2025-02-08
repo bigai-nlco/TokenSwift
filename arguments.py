@@ -27,6 +27,8 @@ class Arguments:
     tree_decoding: Optional[bool] = field(default=False)
     ngram_topk: Optional[int] = field(default=0)
 
+    tp_size: Optional[int] = field(default=1)
+
 
 @dataclass
 class SampleArgs:
