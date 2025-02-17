@@ -22,6 +22,8 @@ from utils.graph_infer import GraphInferenceEngine
 from utils.medusa_utils import generate_medusa_buffers
 from utils.n_gram import N_Gram
 from utils.medusa_choices import decoding_tree
+from models.qwen2_5_config import Qwen2Config
+from models.llama_config import LlamaConfig
 
 
 if __name__ == "__main__":
@@ -59,14 +61,20 @@ if __name__ == "__main__":
         rank0_print(">> tie_word_embeddings")
         target.lm_head.weight = target.model.embed_tokens.weight
 
+    if args.model_type == "qwen2_5":
+        config = Qwen2Config.from_pretrained(f"{args.model_path_prefix}/{args.target}")
+    else:
+        config = LlamaConfig.from_pretrained(f"{args.model_path_prefix}/{args.target}")
+
     tokenizer = AutoTokenizer.from_pretrained(f"{args.model_path_prefix}/{args.target}", use_fast=True, legacy=False)
+    tokenizer.model_max_length = config.max_position_embeddings
 
     ######## load dataset ########
     datasetparent = "data/pg19/"
     dataset = load_dataset("json", data_files=[datasetparent + "pg19-test.json"], split="train")
     tokenized_prompts = []
     for i in tqdm(range(10)):
-        prompt = dataset[i]["text"][5000:]
+        prompt = dataset[i]["text"]
         tokenized_prompt = tokenizer.encode(prompt, return_tensors="pt")
         assert tokenized_prompt.shape[-1] > args.prefill_len
         tokenized_prompts.append(tokenized_prompt)
