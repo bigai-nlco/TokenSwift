@@ -15,7 +15,7 @@
 ---
 
 ## 📦 Demo
-<video src="image/tokenswift.mp4" autoplay="autoplay" muted="muted" controls="controls"></video>
+https://github.com/user-attachments/assets/f8d50cac-7016-435c-9d2a-565a9a40511b
 
 ---
 
