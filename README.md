@@ -1,14 +1,48 @@
 # 🚀 From Hours to Minutes: Achieving Lossless Acceleration in 100K-Token Long Sequence Generation
 
-✨ **A Breakthrough in Long-Sequence Generation Efficiency**  
-*A PyTorch Implementation of Our Paper* [**[Paper Link]**](#)  
+## 🌟 Key Highlights
+| Highlights          | Description                                  | Emoji |
+|------------------|----------------------------------------------|-------|
+| ⚡ **Speed**      | 3× faster than vanilla Transformers      | ⏩    |
+| 🎯 **Lossless**   | Matches original model's output quality      | ✅    |
+| 📈 **Scalability**| Linear time complexity for 100K+ sequences   | 📏    |
+| 🛠️ **Plug & Play**| Works with most HuggingFace models           | 🤗    |
 
 ---
 
-## 📖 Overview
+## ✨ News
+
+---
+
+## ✨ Demo
+<video src="image/tokenswift.mp4" autoplay="autoplay" controls="controls" width="100%" height="100%"></video>
+
+---
+
+## 📖 Table of contents
+- [Introduction](#introduction)
+- [Installation](#installation)
+  - [Method 1: With pip](#method-1-with-pip)
+  - [Method 2: From the source (recommended)](#method-2-from-the-source-recommended)
+- [Inference](#inference)
+  - [Models Download](#models-download)
+  - [Getting Start](#getting-start)
+- [Training Guide (Option)](#training-guide-option)
+  - [Datasets Download](#datasets-download)
+  - [How to Train](#how-to-train)
+- [Citation](#citation)
+- [Acknowledgment](#acknowledgment)
+
+---
+
+## Introduction
+We propose **TokenSwift**, a novel framework that achieves **lossless acceleration** for ultra-long sequence generation (up to 100K tokens) while **reducing computation time from hours to minutes**. 
+
 <img src='image/framework.png'>
 
-We propose **TokenSwift**, a novel framework that achieves **lossless acceleration** for ultra-long sequence generation (up to 100K tokens) while **reducing computation time from hours to minutes**. This repository contains:
+*Illustration of TOKENSWIFT Framework. First, target model (LLM) with partial KV cache and three linear layers outputs 4 logits in a single forward pass. Tree-based attention is then applied to construct candidate tokens. Secondly, top-k candidate 4-grams are retrieved accordingly. These candidates compose draft tokens, which are fed into the LLM with full KV cache to generate target tokens. The verification is performed by checking if draft tokens match exactly with target tokens. Finally, we randomly select one of the longest valid draft tokens, and update n-gram table and KV cache accordingly.*
+
+This repository contains:
 - ✅ **100% reproducibility** for all experiments
 - 📊 Benchmark scripts for sequence lengths: 20K/40K/60K/80K/100K
 - 🤖 Pre-trained model adapters for Any Structure
@@ -18,17 +52,14 @@ We propose **TokenSwift**, a novel framework that achieves **lossless accelerati
 
 ---
 
-## 🌟 Key Features
-| Feature          | Description                                  | Emoji |
-|------------------|----------------------------------------------|-------|
-| ⚡ **Speed**      | 3× faster than vanilla Transformers      | ⏩    |
-| 🎯 **Lossless**   | Matches original model's output quality      | ✅    |
-| 📈 **Scalability**| Linear time complexity for 100K+ sequences   | 📏    |
-| 🛠️ **Plug & Play**| Works with most HuggingFace models           | 🤗    |
+## Installation
 
----
+### Method 1: With pip
+```bash
+pip install xxx
+```
 
-## 🛠️ Installation
+### Method 2: From the source (recommended)
 ```bash
 git clone https://github.com/bigai-nlco/TokenSwift.git
 cd TokenSwift
@@ -39,12 +70,9 @@ pip install -r requirements.txt
 
 ---
 
-## 📦 Data & Models Download
-### Dataset
-> From the [PG-19](https://huggingface.co/datasets/deepmind/pg19) training set, data larger than 8K are filtered out according to different tokenizer.
+## Inference
 
-> Or download processed training datasets from [llama2-pg19](https://huggingface.co/datasets/TokenSwift/llama2_pg19_train_data), [llama3.1-pg19](https://huggingface.co/datasets/TokenSwift/llama3.1_pg19_train_data), [qwen2.5-pg19](https://huggingface.co/datasets/TokenSwift/qwen2.5_pg19_train_data).
-### Fine-tuned Models
+### Models Download
 | Model Name | Download Link |
 |------------|-------------|
 | TokenSwift-Yarn-Llama-2-7b-128k | [HuggingFace](https://huggingface.co/TokenSwift/TokenSwift-Yarn-Llama-2-7b-128k) |
@@ -54,26 +82,35 @@ pip install -r requirements.txt
 | TokenSwift-Qwen2.5-14B | [HuggingFace](https://huggingface.co/TokenSwift/TokenSwift-Qwen2.5-14B) |
 | TokenSwift-DeepSeek-R1-Distill-Qwen-32B | [HuggingFace](https://huggingface.co/TokenSwift/TokenSwift-DeepSeek-R1-Distill-Qwen-32B) |
 
+### Getting Start
+```bash
+bash infer_scripts/r1_qwen_32b.sh
+
+<NOTE: Modify the model path>
+```
+
 ---
 
-## 🏋️ Training Guide (Option)
+## Training Guide (Option)
+
+### Datasets Download
+From the [PG-19](https://huggingface.co/datasets/deepmind/pg19) training set, data larger than 8K are filtered out according to different tokenizer.
+
+Or download processed training datasets from [llama2-pg19](https://huggingface.co/datasets/TokenSwift/llama2_pg19_train_data), [llama3.1-pg19](https://huggingface.co/datasets/TokenSwift/llama3.1_pg19_train_data), [qwen2.5-pg19](https://huggingface.co/datasets/TokenSwift/qwen2.5_pg19_train_data).
+
+### How to Train
 ```bash
 cd train
 bash scripts/train_R1_qwen2_5_32b.sh
+<NOTE: Modify the data and save path>
 ```
-*NOTE: Modify the data and model path.*
 
 ---
 
-## 🧠 Inference Guide
-```bash
-bash infer_scripts/r1_qwen_32b.sh
-```
-*NOTE: Modify the data and model path.*
-
----
-
-## 📚 Citation
+## Citation
 ```bibtex
 
 ```
+
+## Acknowledgment
+This codebase is influenced by remarkable projects from the LLM community, including [Medusa](https://github.com/FasterDecoding/Medusa/tree/main) and [TriForce](https://github.com/Infini-AI-Lab/TriForce).
