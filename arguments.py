@@ -6,7 +6,6 @@ from transformers import HfArgumentParser
 
 @dataclass
 class Arguments:
-    target: str
     ckpt_path: str
 
     gen_len: int

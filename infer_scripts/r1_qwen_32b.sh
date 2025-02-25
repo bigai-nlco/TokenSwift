@@ -1,8 +1,6 @@
 torchrun  --master-port 1111 --nproc_per_node=2 main.py \
-    --model_path_prefix /mnt/buffer/wutong \
-    --target DeepSeek-R1-Distill-Qwen-32B \
     --model_type qwen2_5 \
-    --ckpt_path /mnt/buffer/wutong/adapter_ckpts_R1_qwen2_5_32b/kv_lr_0.005/checkpoint-200 \
+    --ckpt_path your_checkpoint_path \
     --prefill_len 4096 \
     --retrival_max_budget 4096 \
     --gen_len 102400 \

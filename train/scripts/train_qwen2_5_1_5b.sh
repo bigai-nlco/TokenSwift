@@ -1,8 +1,8 @@
 torchrun --master-port 1111 --nproc_per_node=4 train/train_legacy.py \
-    --model_name_or_path /scratch2/nlp/plm/Qwen2.5-1.5B \
+    --model_name_or_path /your_model_path/Qwen2.5-1.5B \
     --llama_type qwen2_5 \
-    --data_path /scratch2/nlp/wutong/public_datasets/qwen2_5_pg19_8k_data \
-    --output_dir /scratch2/nlp/wutong/adapter_ckpts_qwen2_5_1_5b \
+    --data_path /your_data_path/qwen2_pg19_8k_data \
+    --output_dir /your_checkpoint_path/adapter_ckpts_qwen2_5_1_5b \
     --max_steps 200 \
     --per_device_train_batch_size 3 \
     --gradient_accumulation_steps 10 \

@@ -62,15 +62,15 @@ if __name__ == "__main__":
         target.lm_head.weight = target.model.embed_tokens.weight
 
     if args.model_type == "qwen2_5":
-        config = Qwen2Config.from_pretrained(f"{args.model_path_prefix}/{args.target}")
+        config = Qwen2Config.from_pretrained(args.ckpt_path)
     else:
-        config = LlamaConfig.from_pretrained(f"{args.model_path_prefix}/{args.target}")
+        config = LlamaConfig.from_pretrained(args.ckpt_path)
 
-    tokenizer = AutoTokenizer.from_pretrained(f"{args.model_path_prefix}/{args.target}", use_fast=True, legacy=False)
+    tokenizer = AutoTokenizer.from_pretrained(args.ckpt_path, use_fast=True, legacy=False)
     tokenizer.model_max_length = config.max_position_embeddings
 
     ######## load dataset ########
-    datasetparent = "data/pg19/"
+    datasetparent = "data/"
     dataset = load_dataset("json", data_files=[datasetparent + "pg19-test.json"], split="train")
     tokenized_prompts = []
     for i in tqdm(range(10)):
@@ -129,60 +129,6 @@ if __name__ == "__main__":
 
     ######## Warm up for baseline ########
     if args.debug:
-        if args.model_type == "llama3_1":
-            # llama3.1-8b
-            ar_latency = 173
-            ar_latency_record = {
-                10240: 41,
-                20480: 55,
-                30720: 68,
-                40960: 83,
-                51200: 97,
-                61440: 113,
-                71680: 128,
-                81920: 143,
-                92160: 158,
-            }
-        elif args.model_type == "llama2":
-            ar_latency = 114
-            ar_latency_record = {
-                10240: 35.4,
-                20480: 44.1,
-                30720: 52.8,
-                40960: 61.55,
-                51200: 70.3,
-                61440: 79.1,
-                71680: 87.8,
-                81920: 96.6,
-                92160: 105.3,
-            }
-        elif args.target == "Qwen2.5-7B":
-            ar_latency = 142.94
-            ar_latency_record = {
-                10240: 35.56411,
-                20480: 46.57908,
-                30720: 57.83444,
-                40960: 69.30128,
-                51200: 81.2599,
-                61440: 93.67075,
-                71680: 106.12493,
-                81920: 118.47555,
-                92160: 130.7438,
-            }
-        elif args.target == "Qwen2.5-14B":
-            ar_latency = 278.34
-            ar_latency_record = {
-                10240: 65.83,
-                20480: 87.25,
-                30720: 109.21,
-                40960: 131.742,
-                51200: 155.457,
-                61440: 180.197,
-                71680: 205.04,
-                81920: 229.65,
-                92160: 254.07,
-            }
-        else:
             ar_latency = 0
             ar_latency_record = None
     else:

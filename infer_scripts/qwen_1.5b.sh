@@ -1,8 +1,6 @@
 torchrun  --master-port 1111 --nproc_per_node=1 main.py \
-    --model_path_prefix /mnt/buffer/wutong \
-    --target Qwen2.5-1.5B \
     --model_type qwen2_5 \
-    --ckpt_path adapter_ckpts_qwen2_5_1.5b/kv_lr_0.005/checkpoint-200 \
+    --ckpt_path your_checkpoint_path \
     --prefill_len 4096 \
     --retrival_max_budget 4096 \
     --gen_len 102400 \

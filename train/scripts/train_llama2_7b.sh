@@ -1,8 +1,8 @@
 torchrun --master-port 1111 --nproc_per_node=4 train/train_legacy.py \
-    --model_name_or_path /scratch2/nlp/plm/Yarn-Llama-2-7b-128k \
+    --model_name_or_path /your_model_path/Yarn-Llama-2-7b-128k \
     --llama_type llama2 \
-    --data_path /scratch2/nlp/wutong/public_datasets/llama2_pg19_8k_data \
-    --output_dir /scratch2/nlp/wutong/adapter_ckpts_llama2 \
+    --data_path /your_data_path/llama2_pg19_8k_data \
+    --output_dir /your_checkpoint_path/adapter_ckpts_llama2 \
     --max_steps 200 \
     --per_device_train_batch_size 3 \
     --gradient_accumulation_steps 10 \
