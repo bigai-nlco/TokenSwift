@@ -65,7 +65,9 @@ git clone https://github.com/bigai-nlco/TokenSwift.git
 cd TokenSwift
 conda create -n tokenswift python=3.11
 conda activate tokenswift
+conda install nvidia::cuda-nvcc
 pip install -r requirements.txt
+pip install https://github.com/Dao-AILab/flash-attention/releases/download/v2.7.4.post1/flash_attn-2.7.4.post1+cu12torch2.4cxx11abiFALSE-cp311-cp311-linux_x86_64.whl
 ```
 
 ---
