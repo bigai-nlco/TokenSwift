@@ -1,0 +1,14 @@
+torchrun  --master-port 1111 --nproc_per_node=1 main.py \
+    --model_type llama2 \
+    --ckpt_path your_checkpoint_path \
+    --prefill_len 4096 \
+    --retrival_max_budget 4096 \
+    --gen_len 102400 \
+    --gamma 4 \
+    --min_p 0.1 \
+    --temperature 1.0 \
+    --tree_decoding \
+    --ngram_topk 20 \
+    --penalty 1.2 \
+    --penalty_length 1024 \
+    --prompt_id 0
