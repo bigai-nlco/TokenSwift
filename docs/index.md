@@ -46,7 +46,15 @@ code: https://github.com/bigai-nlco/TokenSwift
 
 <section class="section">
     <div class="container is-max-desktop" markdown="1"> 
-
+## 📦 Demo
+<div align="center">
+<video width="960" height="540" controls>
+    <source src="https://github-production-user-asset-6210df.s3.amazonaws.com/41939510/416952418-5094fca7-0b12-470c-a7b6-456d254855d1.mp4?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAVCODYLSA53PQK4ZA%2F20250226%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20250226T030956Z&X-Amz-Expires=300&X-Amz-Signature=2fde28571d56d27f4c573da5599337b3bf90ea0d8afefc93dee3c1486c9473b2&X-Amz-SignedHeaders=host" type="video/mp4">
+    Your browser does not support the video tag.
+</video>
+</div>
+<br/>
+<br/>
 Recent advances in large language models (LLMs), amplified by their long context capacities, have demonstrated remarkable proficiency in intricate reasoning ([OpenAI-o1](https://arxiv.org/abs/2412.16720); [DeepSeek-R1](https://arxiv.org/abs/2501.12948)), agentic thinking ([Reflexion](https://proceedings.neurips.cc/paper_files/paper/2023/file/1b44b878bb782e6954cd888628510e90-Paper-Conference.pdf); [ReAct](https://arxiv.org/pdf/2210.03629); [RAM](https://arxiv.org/pdf/2404.12045)), and creative writing ([Wang et al., 2023](https://arxiv.org/pdf/2311.04459); [Mikhaylovskiy, 2023](https://aclanthology.org/2023.inlg-genchal.2.pdf)), etc. These advancements necessitate the ability to generate lengthy sequences, *e.g.*, o1-like reasoning tends to generate protracted chain-of-thought trajectories before reaching final conclusions.
 <br/>
 <br/>
