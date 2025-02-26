@@ -1,5 +1,9 @@
 # 🚀 From Hours to Minutes: Achieving Lossless Acceleration in 100K-Token Long Sequence Generation
 
+<p align="center">
+| <a href=""><b>Blog</b></a> | <a href=""><b>Paper</b></a> |
+</p>
+
 ## 🌟 Key Highlights
 | Highlights          | Description                                  | Emoji |
 |------------------|----------------------------------------------|-------|
