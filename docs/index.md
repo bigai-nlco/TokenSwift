@@ -29,7 +29,7 @@ misc: >
   <sup><i class="fas fa-star" style='font-size:11px'></i></sup> Equal Contribution.
   <sup><i class="fa fa-envelope"></i></sup> Corresponding authors.
 
-arxiv: https://arxiv.org/abs/2408.02210
+arxiv: https://arxiv.org/abs/2502.18890
 code: https://github.com/bigai-nlco/TokenSwift
 ---
 
