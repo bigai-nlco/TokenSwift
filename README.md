@@ -1,7 +1,7 @@
 # 🚀 From Hours to Minutes: Achieving Lossless Acceleration in 100K-Token Long Sequence Generation
 
 <p align="center">
-| <a href=""><b>Blog</b></a> | <a href="https://arxiv.org/abs/2502.18890"><b>Paper</b></a> |
+| <a href="https://bigai-nlco.github.io/TokenSwift/"><b>Blog</b></a> | <a href="https://arxiv.org/abs/2502.18890"><b>Paper</b></a> |
 </p>
 
 ## 🌟 Key Highlights
