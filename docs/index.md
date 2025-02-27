@@ -72,7 +72,7 @@ A straightforward solution is to take advantage of recent success in speculative
   <figcaption><span class="dnerf">Figure 2.</span> Comparison of the time taken to generate 100K tokens using autoregressive (AR) and TokenSwift with prefix length of 4096 on Llama3.1-8b. As seen, TokenSwift accelerates the AR process from nearly 5 hours to just 90 minutes.</figcaption>
 </figure>
 
-## Why Ultra-Long Sequences Are a Headache
+<h2> Why Ultra-Long Sequences Are a Headache </h2>
 Generating ultra-long sequences exposes three critical bottlenecks:
 
 1. **Frequent Model Reloading:** When generating  ultra-long sequence, such as 100K tokens, the GPU must reload the model weights over 100,000 times. This repetitive process poses the challenge: How can we reduce the frequency of model reloading?
@@ -86,15 +86,15 @@ Generating ultra-long sequences exposes three critical bottlenecks:
     <div class="container is-max-desktop" markdown="1">
 
 
-## TokenSwift: Tailored Solutions for Each Challenge
-### **1. Multi-Token Generation & Token Reutilization**
+<h2> TokenSwift: Tailored Solutions for Each Challenge </h2>
+<h3> **1. Multi-Token Generation & Token Reutilization** </h3>
 Instead of generating one token at a time, TokenSwift predicts multiple tokens in a single forward pass. Inspired by Medusa, it adds lightweight linear layers to the base model, and utilizes tree attention to enable *Multi-Token Generation*. To further boost efficiency, it reuses frequent n-grams (phrases) from earlier text, reducing redundant computations.
-### **2. Dynamic KV Cache Management**
+<h3> **2. Dynamic KV Cache Management**</h3>
 TokenSwift intelligently prunes less important KV pairs while preserving critical context. It keeps the initial prompt’s KV cache intact and dynamically updates the rest based on importance scores derived from attention patterns.
-### **3. Contextual Penalty and Random N-gram Selection**
+<h3> **3. Contextual Penalty and Random N-gram Selection**</h3>
 To combat repetition, TokenSwift penalizes recently generated tokens within a sliding window, nudging the model toward diverse outputs. This works alongside sampling strategies like [Nucleus Sampling](https://arxiv.org/pdf/1904.09751), [min-<math><mi>p</mi></math>](https://arxiv.org/pdf/2407.01082), and [<math xmlns="http://www.w3.org/1998/Math/MathML"><mi>η</mi></math>-sampling](https://arxiv.org/pdf/2210.15191)
 
-## Results: 3x Faster, Scalable, and Robust
+<h2> Results: 3x Faster, Scalable, and Robust</h2>
 <a href="#table1">Table 1</a> and <a href="#table2">Table 2</a> are the main results, showing TokenSwift can consistenly achieve over <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>3</mn>  <mo>×</mo></math> acceleration across various model scales and architecture.
 <figure class="image" style="display: flex; justify-content: center; align-items: center; flex-direction: column;" id="table1">
   <img src="{{ 'https://bigai-nlco.github.io/TokenSwift/assets/img/table1.png' | relative_url }}" style="width: 100%; max-width: 1000px; height: auto"/>
