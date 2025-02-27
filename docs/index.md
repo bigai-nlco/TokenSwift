@@ -49,7 +49,7 @@ code: https://github.com/bigai-nlco/TokenSwift
 ## 📦 Demo
 <div align="center">
 <video width="960" height="540" controls>
-    <source src="https://github-production-user-asset-6210df.s3.amazonaws.com/41939510/416952418-5094fca7-0b12-470c-a7b6-456d254855d1.mp4?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAVCODYLSA53PQK4ZA%2F20250226%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20250226T030956Z&X-Amz-Expires=300&X-Amz-Signature=2fde28571d56d27f4c573da5599337b3bf90ea0d8afefc93dee3c1486c9473b2&X-Amz-SignedHeaders=host" type="video/mp4">
+    <source src="https://github.com/user-attachments/assets/5094fca7-0b12-470c-a7b6-456d254855d1" type="video/mp4">
     Your browser does not support the video tag.
 </video>
 </div>
