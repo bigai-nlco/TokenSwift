@@ -130,7 +130,15 @@ To combat repetition, TokenSwift penalizes recently generated tokens within a sl
 {:.title}
 
 ```bibtex
-
+@misc{wu2025hoursminuteslosslessacceleration,
+      title={From Hours to Minutes: Lossless Acceleration of Ultra Long Sequence Generation up to 100K Tokens}, 
+      author={Tong Wu and Junzhe Shen and Zixia Jia and Yuxuan Wang and Zilong Zheng},
+      year={2025},
+      eprint={2502.18890},
+      archivePrefix={arXiv},
+      primaryClass={cs.CL},
+      url={https://arxiv.org/abs/2502.18890}, 
+}
 ```
 
 </div>
