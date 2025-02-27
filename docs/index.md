@@ -37,7 +37,7 @@ code: https://github.com/bigai-nlco/TokenSwift
 <div class="container is-max-desktop">
 <div class="hero-body">
 <figure class="image" id="framework">
-    <img src="{{ '/assets/img/TokenSwift.png' | relative_url }}" />
+    <img src="{{ 'https://bigai-nlco.github.io/TokenSwift/assets/img/TokenSwift.png' | relative_url }}" />
     <figcaption><span class="dnerf">Figure 1.</span> <b>An overview of TokenSwift.</b> First, target model (LLM) with partial KV cache and three linear layers outputs 4 logits in a single forward pass. Tree-based attention is then applied to construct candidate tokens. Secondly, top-<math><mi>k</mi></math> candidate 4-grams are retrieved accordingly. These candidates compose draft tokens, which are fed into the LLM with full KV cache to generate target tokens. The verification is performed by checking if draft tokens match exactly with target tokens. Finally, we randomly select one of the longest valid draft tokens, and update 4-gram table and KV cache accordingly.</figcaption>
 </figure>
 </div>
@@ -68,7 +68,7 @@ A straightforward solution is to take advantage of recent success in speculative
 <br/>
 <br/>
 <figure class="image" style="display: flex; justify-content: center; align-items: center; flex-direction: column;" id="speed">
-  <img src="{{ '/assets/img/speed.png' | relative_url }}" style="width: 80%; max-width: 600px; height: auto"/>
+  <img src="{{ 'https://bigai-nlco.github.io/TokenSwift/assets/img/speed.png' | relative_url }}" style="width: 80%; max-width: 600px; height: auto"/>
   <figcaption><span class="dnerf">Figure 2.</span> Comparison of the time taken to generate 100K tokens using autoregressive (AR) and TokenSwift with prefix length of 4096 on Llama3.1-8b. As seen, TokenSwift accelerates the AR process from nearly 5 hours to just 90 minutes.</figcaption>
 </figure>
 
@@ -97,13 +97,13 @@ To combat repetition, TokenSwift penalizes recently generated tokens within a sl
 ## Results: 3x Faster, Scalable, and Robust
 <a href="#table1">Table 1</a> and <a href="#table2">Table 2</a> are the main results, showing TokenSwift can consistenly achieve over <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>3</mn>  <mo>×</mo></math> acceleration across various model scales and architecture.
 <figure class="image" style="display: flex; justify-content: center; align-items: center; flex-direction: column;" id="table1">
-  <img src="{{ '/assets/img/table1.png' | relative_url }}" style="width: 100%; max-width: 1000px; height: auto"/>
+  <img src="{{ 'https://bigai-nlco.github.io/TokenSwift/assets/img/table1.png' | relative_url }}" style="width: 100%; max-width: 1000px; height: auto"/>
   <figcaption><span class="dnerf">Table 1.</span> Experimental results for LLaMA2 and LLaMA3.1 under varying prefix lengths, generating sequences from 20K to 100K tokens.</figcaption>
 </figure>
 <br/>
 <br/>
 <figure class="image" style="display: flex; justify-content: center; align-items: center; flex-direction: column;" id="table2">
-  <img src="{{ '/assets/img/table2.png' | relative_url }}" style="width: 100%; max-width: 1000px; height: auto"/>
+  <img src="{{ 'https://bigai-nlco.github.io/TokenSwift/assets/img/table2.png' | relative_url }}" style="width: 100%; max-width: 1000px; height: auto"/>
   <figcaption><span class="dnerf">Table 2.</span> Experimental results of TokenSwift for Qwen2.5 across different scales under prefix length 4096, generating sequences from 20K to 100K tokens. The time is measured in minutes. </figcaption>
 </figure>
 <br/>
@@ -111,18 +111,18 @@ To combat repetition, TokenSwift penalizes recently generated tokens within a sl
 
 <div style="display: flex; justify-content: center; align-items: flex-start;">
   <figure class="image" style="display: flex; flex-direction: column; margin-right: 20px; text-align: center">
-    <img src="{{ '/assets/img/abl_ngram.png' | relative_url }}" style="width: 100%; max-width: 1000px; height: auto"/>
+    <img src="{{ 'https://bigai-nlco.github.io/TokenSwift/assets/img/abl_ngram.png' | relative_url }}" style="width: 100%; max-width: 1000px; height: auto"/>
     <figcaption>Ablation on Token Reutilization </figcaption>
   </figure>
   <figure class="image" style="display: flex; flex-direction: column; text-align: center">
-    <img src="{{ '/assets/img/abl_penalty.png' | relative_url }}" style="width: 100%; max-width: 1000px; height: auto"/>
+    <img src="{{ 'https://bigai-nlco.github.io/TokenSwift/assets/img/abl_penalty.png' | relative_url }}" style="width: 100%; max-width: 1000px; height: auto"/>
     <figcaption>Ablation on Contextual Penalty </figcaption>
   </figure>
 </div>
 
 
 <figure class="image" style="display: flex; justify-content: center; align-items: center; flex-direction: column;" id="case">
-  <img src="{{ '/assets/img/case.png' | relative_url }}" style="width: 50%; max-width: 1000px; height: auto"/>
+  <img src="{{ 'https://bigai-nlco.github.io/TokenSwift/assets/img/case.png' | relative_url }}" style="width: 50%; max-width: 1000px; height: auto"/>
   <figcaption><span class="dnerf">Case Study on Llama3.1-8b</span> Left: fragments of generated text without Contextual Penalty. Right: fragments of generated text with Contextual Penalty. The <span style="color: blue">blue</span> text is the repetition part. </figcaption>
 </figure>
 
