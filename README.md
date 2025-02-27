@@ -1,7 +1,7 @@
 # 🚀 From Hours to Minutes: Achieving Lossless Acceleration in 100K-Token Long Sequence Generation
 
 <p align="center">
-| <a href=""><b>Blog</b></a> | <a href=""><b>Paper</b></a> |
+| <a href=""><b>Blog</b></a> | <a href="https://arxiv.org/abs/2502.18890"><b>Paper</b></a> |
 </p>
 
 ## 🌟 Key Highlights
@@ -15,6 +15,8 @@
 ---
 
 ## ✨ News
+
+[2025.2.27] Paper Release on Arxiv.
 
 ---
 
@@ -115,7 +117,15 @@ bash scripts/train_R1_qwen2_5_32b.sh
 
 ## Citation
 ```bibtex
-
+@misc{wu2025hoursminuteslosslessacceleration,
+      title={From Hours to Minutes: Lossless Acceleration of Ultra Long Sequence Generation up to 100K Tokens}, 
+      author={Tong Wu and Junzhe Shen and Zixia Jia and Yuxuan Wang and Zilong Zheng},
+      year={2025},
+      eprint={2502.18890},
+      archivePrefix={arXiv},
+      primaryClass={cs.CL},
+      url={https://arxiv.org/abs/2502.18890}, 
+}
 ```
 
 ## Acknowledgment
