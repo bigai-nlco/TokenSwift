@@ -28,8 +28,7 @@ https://github.com/user-attachments/assets/5094fca7-0b12-470c-a7b6-456d254855d1
 ## 📖 Table of contents
 - [Introduction](#introduction)
 - [Installation](#installation)
-  - [Method 1: With pip](#method-1-with-pip)
-  - [Method 2: From the source (recommended)](#method-2-from-the-source-recommended)
+  - [From the source (recommended)](#from-the-source-recommended)
 - [Inference](#inference)
   - [Models Download](#models-download)
   - [Getting Start](#getting-start)
@@ -60,12 +59,7 @@ This repository contains:
 
 ## Installation
 
-### Method 1: With pip
-```bash
-pip install xxx
-```
-
-### Method 2: From the source (recommended)
+### From the source (recommended)
 ```bash
 git clone https://github.com/bigai-nlco/TokenSwift.git
 cd TokenSwift
