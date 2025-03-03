@@ -16,6 +16,8 @@
 
 ## ✨ News
 
+[2025.2.28] Code Release.
+
 [2025.2.27] Paper Release on Arxiv.
 
 ---
@@ -85,10 +87,28 @@ pip install https://github.com/Dao-AILab/flash-attention/releases/download/v2.7.
 | TokenSwift-DeepSeek-R1-Distill-Qwen-32B | [HuggingFace](https://huggingface.co/TokenSwift/TokenSwift-DeepSeek-R1-Distill-Qwen-32B) |
 
 ### Getting Start
+Take LLaMA3.1-8B as an example:
+```bash
+torchrun  --master-port 1111 --nproc_per_node=1 main.py \
+    --model_type llama3_1 \
+    --ckpt_path your_checkpoint_path \
+    --prefill_len 4096 \
+    --retrival_max_budget 4096 \
+    --gen_len 102400 \
+    --gamma 4 \
+    --min_p 0.1 \
+    --temperature 1.0 \
+    --tree_decoding \
+    --ngram_topk 20 \
+    --penalty 1.2 \
+    --penalty_length 1024 \
+    --prompt_id 0
+
+  <NOTE: Modify the data and model path>
+```
+For other models, you can run the scripts in ```infer_scripts/``` folder. For example：
 ```bash
 bash infer_scripts/r1_qwen_32b.sh
-
-<NOTE: Modify the model path>
 ```
 
 ---
@@ -101,10 +121,33 @@ From the [PG-19](https://huggingface.co/datasets/deepmind/pg19) training set, da
 Or download processed training datasets from [llama2-pg19](https://huggingface.co/datasets/TokenSwift/llama2_pg19_train_data), [llama3.1-pg19](https://huggingface.co/datasets/TokenSwift/llama3.1_pg19_train_data), [qwen2.5-pg19](https://huggingface.co/datasets/TokenSwift/qwen2.5_pg19_train_data).
 
 ### How to Train
+Take LLaMA3.1-8B as an example:
+```bash
+torchrun --master-port 1111 --nproc_per_node=4 train/train_legacy.py \
+    --model_name_or_path /your_model_path/Meta-Llama-3.1-8B \
+    --llama_type llama3_1 \
+    --data_path /your_data_path/llama3_1_pg19_8k_data \
+    --output_dir /your_checkpoint_path/adapter_ckpts_llama3_1 \
+    --max_steps 200 \
+    --per_device_train_batch_size 3 \
+    --gradient_accumulation_steps 10 \
+    --save_steps 200 \
+    --learning_rate 5e-3 \
+    --weight_decay 0.1 \
+    --warmup_steps 50 \
+    --lr_scheduler_type cosine \
+    --logging_steps 5 \
+    --report_to tensorboard \
+    --bf16 True \
+    --medusa_heads 3 \
+    --remove-unused-columns false
+  
+  <NOTE: Modify the data and model path>
+```
+For other models, you can run the scripts in ```train/scripts/``` folder. For example：
 ```bash
 cd train
 bash scripts/train_R1_qwen2_5_32b.sh
-<NOTE: Modify the data and save path>
 ```
 
 ---
