@@ -3,7 +3,7 @@ layout: default
 
 title: > 
   From Hours to Minutes: Lossless Acceleration of Ultra Long Sequence Generation up to 100K Tokens
-venue: arXiv
+# venue: arXiv
 authors:
     - name: Tong Wu
       tag: <i class="fas fa-star" style='font-size:11px'></i> 1
@@ -46,7 +46,7 @@ code: https://github.com/bigai-nlco/TokenSwift
 
 <section class="section">
     <div class="container is-max-desktop" markdown="1"> 
-## 📦 Demo
+<h2 style="font-size: 2em; font-weight: bold;">📦 Demo</h2>
 <div align="center">
 <video width="960" height="540" controls>
     <source src="https://github.com/user-attachments/assets/5094fca7-0b12-470c-a7b6-456d254855d1" type="video/mp4">
@@ -55,23 +55,27 @@ code: https://github.com/bigai-nlco/TokenSwift
 </div>
 <br/>
 <br/>
-Recent advances in large language models (LLMs), amplified by their long context capacities, have demonstrated remarkable proficiency in intricate reasoning ([OpenAI-o1](https://arxiv.org/abs/2412.16720); [DeepSeek-R1](https://arxiv.org/abs/2501.12948)), agentic thinking ([Reflexion](https://proceedings.neurips.cc/paper_files/paper/2023/file/1b44b878bb782e6954cd888628510e90-Paper-Conference.pdf); [ReAct](https://arxiv.org/pdf/2210.03629); [RAM](https://arxiv.org/pdf/2404.12045)), and creative writing ([Wang et al., 2023](https://arxiv.org/pdf/2311.04459); [Mikhaylovskiy, 2023](https://aclanthology.org/2023.inlg-genchal.2.pdf)), etc. These advancements necessitate the ability to generate lengthy sequences, *e.g.*, o1-like reasoning tends to generate protracted chain-of-thought trajectories before reaching final conclusions.
+Recent advances in large language models (LLMs), amplified by their long context capacities, have demonstrated remarkable proficiency in intricate reasoning ([OpenAI-o1](https://arxiv.org/abs/2412.16720); [DeepSeek-R1](https://arxiv.org/abs/2501.12948)), agentic thinking ([Reflexion](https://proceedings.neurips.cc/paper_files/paper/2023/file/1b44b878bb782e6954cd888628510e90-Paper-Conference.pdf); [ReAct](https://arxiv.org/pdf/2210.03629); [RAM](https://arxiv.org/pdf/2404.12045)), and creative writing ([Wang et al., 2023](https://arxiv.org/pdf/2311.04459); [Mikhaylovskiy, 2023](https://aclanthology.org/2023.inlg-genchal.2.pdf)), etc. These advancements **necessitate the ability to generate lengthy sequences**, *e.g.*, o1-like reasoning tends to generate protracted chain-of-thought trajectories before reaching final conclusions.
 <br/>
 <br/>
 However, generating ultra-long sequences (up tp 100K tokens) is painfully slow. For example, generating 100K tokens with LLaMA3.1-8B can take approximately five hours (<a href="#speed">Figure 2</a>), hindering real-world applications.
-<br/>
-<br/>
-A straightforward solution is to take advantage of recent success in speculative decoding (SD). However, existing methods are generally tailored for generating short sequences, *e.g.*, [TriForce](https://arxiv.org/pdf/2404.11912) and [MagicDec](https://arxiv.org/pdf/2408.11049) are limited to generating 256 and 64 tokens, respectively. Directly extending their generation length to 100K tokens would inevitably encounter failures due to KV cache budget constraints. Furthermore, even when applied to optimized KV cache architectures such as Group Query Attention (GQA), these methods yield only marginal acceleration gains for short-sequence generation. This observation leads to a pivotal research question:
-<br/>
-<br/>
-*Is it possible to achieve model-agnostic **lossless** accelerations, akin to those seen in short-sequence SDs, for generating **ultra-long** sequences, with **minimal** training overhead?*
 <br/>
 <br/>
 <figure class="image" style="display: flex; justify-content: center; align-items: center; flex-direction: column;" id="speed">
   <img src="{{ 'https://bigai-nlco.github.io/TokenSwift/assets/img/speed.png' | relative_url }}" style="width: 80%; max-width: 600px; height: auto"/>
   <figcaption><span class="dnerf">Figure 2.</span> Comparison of the time taken to generate 100K tokens using autoregressive (AR) and TokenSwift with prefix length of 4096 on Llama3.1-8b. As seen, TokenSwift accelerates the AR process from nearly 5 hours to just 90 minutes.</figcaption>
 </figure>
-
+<h2 style="font-size: 2em; font-weight: bold;">Is Speculative Decoding Enough?</h2>
+A straightforward solution is to take advantage of recent success in speculative decoding (SD). However, existing methods are generally tailored for generating short sequences, *e.g.*, [TriForce](https://arxiv.org/pdf/2404.11912) and [MagicDec](https://arxiv.org/pdf/2408.11049) are limited to generating 256 and 64 tokens, respectively. Directly extending their generation length to 100K tokens would inevitably encounter failures due to KV cache budget constraints. Furthermore, when applied to optimized KV cache architectures such as Group Query Attention (GQA), these methods yield only marginal acceleration gains for short-sequence generation (<a href="#sd_speedup">Figure 3</a>). This observation leads to a pivotal research question:
+<br/>
+<br/>
+*Is it possible to achieve model-agnostic **lossless** accelerations, akin to those seen in short-sequence SDs, for generating **ultra-long** sequences, with **minimal** training overhead?*
+<br/>
+<br/>
+<figure class="image" style="display: flex; justify-content: center; align-items: center; flex-direction: column;" id="sd_speedup">
+  <img src="{{ 'https://bigai-nlco.github.io/TokenSwift/assets/img/sd_speedup.png' | relative_url }}" style="width: 40%; max-width: 600px; height: auto"/>
+  <figcaption><span class="dnerf">Figure 3</span></figcaption>
+</figure>
 <h2 style="font-size: 2em; font-weight: bold;">Why Ultra-Long Sequences Are a Headache</h2>
 Generating ultra-long sequences exposes three critical bottlenecks:
 
@@ -112,11 +116,11 @@ To combat repetition, TokenSwift penalizes recently generated tokens within a sl
 <div style="display: flex; justify-content: center; align-items: flex-start;">
   <figure class="image" style="display: flex; flex-direction: column; margin-right: 20px; text-align: center">
     <img src="{{ 'https://bigai-nlco.github.io/TokenSwift/assets/img/abl_ngram.png' | relative_url }}" style="width: 100%; max-width: 1000px; height: auto"/>
-    <figcaption>Ablation on Token Reutilization </figcaption>
+    <figcaption>Ablation on Token Reutilization: Enabling Token Reutilization (<math><mi>k</mi></math>=20) significantly improves the overall acceptance rate and speedup throughout the generation process. </figcaption>
   </figure>
   <figure class="image" style="display: flex; flex-direction: column; text-align: center">
     <img src="{{ 'https://bigai-nlco.github.io/TokenSwift/assets/img/abl_penalty.png' | relative_url }}" style="width: 100%; max-width: 1000px; height: auto"/>
-    <figcaption>Ablation on Contextual Penalty </figcaption>
+    <figcaption>Ablation on Contextual Penalty: Applying Contextual Penalty significantly improves the diversity of generation despite the sampling method. </figcaption>
   </figure>
 </div>
 
