@@ -1,10 +1,12 @@
-# 🚀 From Hours to Minutes: Achieving Lossless Acceleration in 100K-Token Long Sequence Generation
+<div align="center" id="title"> <img src="./assets/TokenSwiftLogo.png" width=256px /> </div>
 
+<h2 align="center">Lossless Acceleration of Ultra Long Sequence Generation up to 100K Tokens</h2>
 <p align="center">
 | <a href="https://bigai-nlco.github.io/TokenSwift/"><b>Blog</b></a> | <a href="https://arxiv.org/abs/2502.18890"><b>Paper</b></a> |
 </p>
 
-## 🌟 Key Highlights
+TokenSwift is a novel framework designed to substantially accelerate the generation process of ultra-long sequences, up to 100K tokens, while maintaining the target model's inherent quality. 
+
 | Highlights          | Description                                  | Emoji |
 |------------------|----------------------------------------------|-------|
 | ⚡ **Speed**      | 3× faster than vanilla Transformers      | ⏩    |
