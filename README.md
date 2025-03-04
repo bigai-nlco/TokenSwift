@@ -1,4 +1,4 @@
-<div align="center" id="title"> <img src="./assets/TokenSwiftLogo.png" width=256px /> </div>
+<div align="center" id="title"> <img src="./image/TokenSwiftLogo.png" width=400px /> </div>
 
 <h2 align="center">Lossless Acceleration of Ultra Long Sequence Generation up to 100K Tokens</h2>
 <p align="center">
