@@ -1,9 +1,11 @@
 <div align="center" id="title"> <img src="./image/TokenSwiftLogo.png" width=400px /> </div>
 
-<h2 align="center">Lossless Acceleration of Ultra Long Sequence Generation up to 100K Tokens</h2>
-<p align="center">
-| <a href="https://bigai-nlco.github.io/TokenSwift/"><b>Blog</b></a> | <a href="https://arxiv.org/abs/2502.18890"><b>Paper</b></a> |
-</p>
+<h3 align="center">From Hours to Minutes: Lossless Acceleration of Ultra Long Sequence Generation</h3>
+<div align="center">
+  <a href="https://huggingface.co/TokenSwift"><img src="https://huggingface.co/datasets/huggingface/badges/raw/main/model-on-hf-sm-dark.svg" alt="Model On HF"></a>
+ <a href="https://bigai-nlco.github.io/TokenSwift/"><img src="https://img.shields.io/badge/Website-TokenSwift-brightgreen.svg"/></a>
+ <a href="https://arxiv.org/abs/2502.18890"><img src="https://img.shields.io/badge/Arxiv-2502.18890-b31b1b.svg?logo=arXiv" alt=""></a>
+</div>
 
 TokenSwift is a novel framework designed to substantially accelerate the generation process of ultra-long sequences, up to 100K tokens, while maintaining the target model's inherent quality. 
 
