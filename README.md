@@ -68,7 +68,7 @@ This repository contains:
 
 ### Method 1: With pip
 ```bash
-pip install TokenSwift==0.2
+pip install tokenswift
 ```
 
 ### Method 2: From the source (recommended)
