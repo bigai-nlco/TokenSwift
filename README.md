@@ -20,7 +20,7 @@ TokenSwift is a novel framework designed to substantially accelerate the generat
 
 ## ✨ News
 
-[2025.2.28] 🔥🔥Relase model for finetuned [DeepSeek-R1-Distill-Qwen-32B](https://huggingface.co/TokenSwift/TokenSwift-DeepSeek-R1-Distill-Qwen-32B) with 3 $\times$ acceleration. Check out [inference guide](#inference) to getting started. 
+[2025.2.28] 🔥🔥Relase model for finetuned [DeepSeek-R1-Distill-Qwen-32B](https://huggingface.co/TokenSwift/TokenSwift-DeepSeek-R1-Distill-Qwen-32B) with 3 $\times$ acceleration. Check out [inference guide](#inference) for deployment. 
 
 [2025.2.27] Paper Release on Arxiv.
 
@@ -36,10 +36,10 @@ https://github.com/user-attachments/assets/5094fca7-0b12-470c-a7b6-456d254855d1
 - [Installation](#installation)
   - [Method 1: With pip](#method-1-with-pip)
   - [Method 2: From the source (recommended)](#method-2-from-the-source-recommended)
-- [Inference](#inference)
+- [Getting Started](#getting-started)
   - [Models Download](#models-download)
-  - [Getting Start](#getting-start)
-- [Training Guide (Option)](#training-guide-option)
+  - [Inference](#inference)
+- [Training Guide (Optional)](#training-guide-optional)
   - [Datasets Download](#datasets-download)
   - [How to Train](#how-to-train)
 - [Citation](#citation)
@@ -84,7 +84,7 @@ pip install https://github.com/Dao-AILab/flash-attention/releases/download/v2.7.
 
 ---
 
-## Inference
+## Getting Started
 
 ### Models Download
 | Model Name | Download Link |
@@ -96,7 +96,7 @@ pip install https://github.com/Dao-AILab/flash-attention/releases/download/v2.7.
 | TokenSwift-Qwen2.5-14B | [HuggingFace](https://huggingface.co/TokenSwift/TokenSwift-Qwen2.5-14B) |
 | TokenSwift-DeepSeek-R1-Distill-Qwen-32B | [HuggingFace](https://huggingface.co/TokenSwift/TokenSwift-DeepSeek-R1-Distill-Qwen-32B) |
 
-### Getting Start
+### Inference
 Take LLaMA3.1-8B as an example:
 ```bash
 torchrun  --master-port 1111 --nproc_per_node=1 main.py \
@@ -123,7 +123,7 @@ bash infer_scripts/r1_qwen_32b.sh
 
 ---
 
-## Training Guide (Option)
+## Training Guide (Optional)
 
 ### Datasets Download
 From the [PG-19](https://huggingface.co/datasets/deepmind/pg19) training set, data larger than 8K are filtered out according to different tokenizer.
@@ -163,8 +163,9 @@ bash scripts/train_R1_qwen2_5_32b.sh
 ---
 
 ## Citation
+If you are interested in our work or use our libarary, please cite:
 ```bibtex
-@misc{wu2025hoursminuteslosslessacceleration,
+@misc{tokenswift,
       title={From Hours to Minutes: Lossless Acceleration of Ultra Long Sequence Generation up to 100K Tokens}, 
       author={Tong Wu and Junzhe Shen and Zixia Jia and Yuxuan Wang and Zilong Zheng},
       year={2025},
