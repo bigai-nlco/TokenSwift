@@ -163,7 +163,7 @@ bash scripts/train_R1_qwen2_5_32b.sh
 ---
 
 ## Citation
-If you are interested in our work or use our libarary, please cite:
+If you are interested in our work or use our library, please cite:
 ```bibtex
 @misc{tokenswift,
       title={From Hours to Minutes: Lossless Acceleration of Ultra Long Sequence Generation up to 100K Tokens}, 
