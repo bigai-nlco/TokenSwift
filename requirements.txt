@@ -13,3 +13,4 @@ transformers==4.47.1
 triton==3.0.0
 sortedcontainers
 tensorboard
+deepspeed
