@@ -180,3 +180,7 @@ If you are interested in our work or use our library, please cite:
 
 ## Acknowledgment
 This codebase is influenced by remarkable projects from the LLM community, including [Medusa](https://github.com/FasterDecoding/Medusa/tree/main) and [TriForce](https://github.com/Infini-AI-Lab/TriForce).
+
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=bigai-nlco/TokenSwift&type=Date)](https://www.star-history.com/#bigai-nlco/TokenSwift&Date)
