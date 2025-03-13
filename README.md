@@ -44,6 +44,7 @@ https://github.com/user-attachments/assets/5094fca7-0b12-470c-a7b6-456d254855d1
 - [Training Guide (Optional)](#training-guide-optional)
   - [Datasets Download](#datasets-download)
   - [How to Train](#how-to-train)
+- [Star History](#star-history)
 - [Citation](#citation)
 - [Acknowledgment](#acknowledgment)
 
@@ -164,6 +165,11 @@ bash scripts/train_R1_qwen2_5_32b.sh
 
 ---
 
+## Star History
+[![Star History Chart](https://api.star-history.com/svg?repos=bigai-nlco/TokenSwift&type=Date)](https://www.star-history.com/#bigai-nlco/TokenSwift&Date)
+
+---
+
 ## Citation
 If you are interested in our work or use our library, please cite:
 ```bibtex
@@ -178,9 +184,11 @@ If you are interested in our work or use our library, please cite:
 }
 ```
 
+---
+
 ## Acknowledgment
 This codebase is influenced by remarkable projects from the LLM community, including [Medusa](https://github.com/FasterDecoding/Medusa/tree/main) and [TriForce](https://github.com/Infini-AI-Lab/TriForce).
 
-## Star History
 
-[![Star History Chart](https://api.star-history.com/svg?repos=bigai-nlco/TokenSwift&type=Date)](https://www.star-history.com/#bigai-nlco/TokenSwift&Date)
+
+
