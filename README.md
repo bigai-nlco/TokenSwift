@@ -33,6 +33,11 @@ https://github.com/user-attachments/assets/5094fca7-0b12-470c-a7b6-456d254855d1
 
 ---
 
+## ✨ Star History
+[![Star History Chart](https://api.star-history.com/svg?repos=bigai-nlco/TokenSwift&type=Date)](https://www.star-history.com/#bigai-nlco/TokenSwift&Date)
+
+---
+
 ## 📖 Table of contents
 - [Introduction](#introduction)
 - [Installation](#installation)
@@ -44,7 +49,6 @@ https://github.com/user-attachments/assets/5094fca7-0b12-470c-a7b6-456d254855d1
 - [Training Guide (Optional)](#training-guide-optional)
   - [Datasets Download](#datasets-download)
   - [How to Train](#how-to-train)
-- [Star History](#star-history)
 - [Citation](#citation)
 - [Acknowledgment](#acknowledgment)
 
@@ -162,11 +166,6 @@ For other models, you can run the scripts in ```train/scripts/``` folder. For ex
 cd train
 bash scripts/train_R1_qwen2_5_32b.sh
 ```
-
----
-
-## Star History
-[![Star History Chart](https://api.star-history.com/svg?repos=bigai-nlco/TokenSwift&type=Date)](https://www.star-history.com/#bigai-nlco/TokenSwift&Date)
 
 ---
 
