@@ -20,6 +20,8 @@ TokenSwift is a novel framework designed to substantially accelerate the generat
 
 ## ✨ News
 
+[2025.5.2] 🔥🔥 Our Paper is accepted by ICML 2025! 
+
 [2025.3.19] 🔥🔥Relase model for finetuned [QwQ-32B](https://huggingface.co/TokenSwift/TokenSwift-QwQ-32B) with 3 $\times$ acceleration. Check out [inference guide](#inference) for deployment. 
 
 [2025.2.28] 🔥🔥Relase model for finetuned [DeepSeek-R1-Distill-Qwen-32B](https://huggingface.co/TokenSwift/TokenSwift-DeepSeek-R1-Distill-Qwen-32B) with 3 $\times$ acceleration. Check out [inference guide](#inference) for deployment. 
