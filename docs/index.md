@@ -2,8 +2,8 @@
 layout: default
 
 title: > 
-  From Hours to Minutes: Lossless Acceleration of Ultra Long Sequence Generation up to 100K Tokens
-# venue: arXiv
+  TokenSwift: Lossless Acceleration of Ultra Long Sequence Generation up to 100K Tokens
+venue: ICML 2025
 authors:
     - name: Tong Wu
       tag: <i class="fas fa-star" style='font-size:11px'></i> 1
