@@ -1,6 +1,6 @@
 <div align="center" id="title"> <img src="./image/TokenSwiftLogo.png" width=400px /> </div>
 
-<h3 align="center">From Hours to Minutes: Lossless Acceleration of Ultra Long Sequence Generation</h3>
+<h3 align="center">TokenSwift: Lossless Acceleration of Ultra Long Sequence Generation</h3>
 <div align="center">
   <a href="https://huggingface.co/TokenSwift"><img src="https://huggingface.co/datasets/huggingface/badges/raw/main/model-on-hf-sm-dark.svg" alt="Model On HF"></a>
  <a href="https://bigai-nlco.github.io/TokenSwift/"><img src="https://img.shields.io/badge/Website-TokenSwift-brightgreen.svg"/></a>
